@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./autodoc.png" alt="AutoDoc.ai Logo" height="500">
+  <img src="./autodoc.png" alt="AutoDoc.ai Logo" height="400">
 
   ### ✨ Crafting Professional Documentation with AI Precision
 
