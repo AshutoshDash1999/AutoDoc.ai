@@ -1,0 +1,136 @@
+/* Contributors Page Styles */
+
+:root {
+  --deep-navy: #0A192F;
+  --card-bg: #112240;
+  --text-primary: #E6F1FF;
+  --text-secondary: #8892B0;
+  --sky-blue: #38BDF8;
+  --btn-gradient: linear-gradient(90deg, #A855F7, #06B6D4);
+}
+
+.contributors-page {
+  min-height: 100vh;
+  background-color: var(--deep-navy);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5%;
+  background: rgba(10, 25, 47, 0.95);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-logo img {
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.nav-logo img:hover {
+  transform: scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.back-link {
+  color: var(--sky-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 8rem 5% 2rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 0 5% 4rem;
+}
+
+/* Card */
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 3px solid var(--sky-blue);
+  margin-bottom: 1rem;
+}
+
+.name {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: var(--text-primary);
+}
+
+.badge {
+  display: inline-block;
+  background: var(--btn-gradient);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--btn-gradient);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 1rem;
+  transition: opacity 0.2s ease;
+}
+
+.github-btn:hover {
+  opacity: 0.9;
+}
