@@ -7,6 +7,7 @@ const Generator = () => {
   const [customInstructions, setCustomInstructions] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [markdownOutput, setMarkdownOutput] = useState('');
+  const [copied, setCopied] = useState(false);
 
   const handleGenerate = () => {
     setIsGenerating(true);
@@ -17,7 +18,10 @@ const Generator = () => {
   };
 
   const handleCopyCode = () => {
+    if (!markdownOutput) return;
     navigator.clipboard.writeText(markdownOutput);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -81,8 +85,11 @@ const Generator = () => {
           <div className="output-header">
             <h3>Generated Documentation</h3>
             {markdownOutput && (
-              <button onClick={handleCopyCode} className="btn btn-copy">
-                Copy Code
+              <button 
+                onClick={handleCopyCode} 
+                className={`btn btn-copy ${copied ? 'copied' : ''}`}
+              >
+                {copied ? 'Copied! ✓' : 'Copy Code'}
               </button>
             )}
           </div>

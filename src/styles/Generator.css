@@ -195,11 +195,23 @@
   padding: 0.5rem 1.15rem;
   font-size: 0.85rem;
   border-radius: 999px;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-copy:hover {
   background: rgba(34, 197, 94, 0.2);
   border-color: var(--accent-color);
+}
+
+.btn-copy.copied {
+  background: var(--accent-color);
+  color: #000000;
+  border-color: var(--accent-color);
+}
+
+.btn-copy.copied:hover {
+  background: var(--accent-hover);
+  color: #000000;
 }
 
 .btn:disabled {
