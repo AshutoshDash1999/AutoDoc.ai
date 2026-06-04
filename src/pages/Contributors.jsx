@@ -51,8 +51,15 @@ const Contributors = () => {
         const now = Date.now();
 
         if (cachedData && cachedTime && now - parseInt(cachedTime, 10) < 24 * 60 * 60 * 1000) {
-          setContributors(JSON.parse(cachedData));
-          return;
+          try {
+            const parsedData = JSON.parse(cachedData);
+            if (Array.isArray(parsedData) && parsedData.length > 0) {
+              setContributors(parsedData);
+              return;
+            }
+          } catch (parseErr) {
+            console.error('Failed to parse cached contributors JSON:', parseErr);
+          }
         }
 
         const response = await fetch('https://api.github.com/repos/abhro05/AutoDoc.ai/contributors');
@@ -67,9 +74,17 @@ const Contributors = () => {
           localStorage.setItem('github_contributors_time', now.toString());
         }
       } catch (error) {
+        console.error('Error fetching contributors, falling back to cache if available:', error);
         const cachedData = localStorage.getItem('github_contributors');
         if (cachedData) {
-          setContributors(JSON.parse(cachedData));
+          try {
+            const parsedData = JSON.parse(cachedData);
+            if (Array.isArray(parsedData) && parsedData.length > 0) {
+              setContributors(parsedData);
+            }
+          } catch (parseErr) {
+            console.error('Failed to parse cached contributors JSON in fallback:', parseErr);
+          }
         }
       }
     };
