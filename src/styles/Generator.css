@@ -12,11 +12,41 @@
   --output-bg: #0c0c0d;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  border: 2px solid #080808;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.08) #080808;
+}
+
 .generator-container {
   min-height: 100vh;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+.navbar,
+.navbar * {
+  box-sizing: border-box;
 }
 
 .navbar {
@@ -95,8 +125,15 @@
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .workspace {
@@ -113,9 +150,9 @@
 .control-panel {
   background: var(--bg-secondary);
   border-radius: 16px;
-  padding: 2.5rem;
+  padding: 1.25rem 2.5rem 2.5rem;
   border: 1px solid var(--border-color);
-  height: fit-content;
+  height: 450px;
 }
 
 .panel-title {
@@ -247,8 +284,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  height: calc(100vh - 11rem);
-  min-height: 400px;
+  height: 510px;
 }
 
 .output-header {
@@ -281,6 +317,119 @@
   color: inherit;
 }
 
+.output-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.tab-button {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+  color: var(--text-primary);
+}
+
+.tab-button.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.markdown-body {
+  background-color: transparent !important;
+  color: #e4e4e7 !important;
+  font-family: 'Inter', sans-serif !important;
+  white-space: normal !important;
+}
+
+.markdown-body pre {
+  background-color: #18181b !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+.markdown-body code {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #e4e4e7 !important;
+}
+
+.markdown-body pre code {
+  background-color: transparent !important;
+}
+
+.btn-copy-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  opacity: 0.6;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-copy-icon:hover {
+  opacity: 1;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-copy-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-copy-icon:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+
+@media (max-width: 500px) {
+  .output-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .output-header-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .tabs {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .tab-button {
+    flex: 1;
+    text-align: center;
+  }
+}
+
 @media (max-width: 1024px) {
   .workspace {
     grid-template-columns: 1fr;
@@ -289,10 +438,11 @@
 
   .control-panel {
     margin-bottom: 1.5rem;
+    height: auto;
   }
 
   .output-panel {
-    height: 500px;
+    height: 480px;
   }
 }
 

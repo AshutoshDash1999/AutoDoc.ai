@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { marked } from 'marked';
+import 'github-markdown-css/github-markdown-dark.css';
 import "../styles/Generator.css";
 
 const Generator = () => {
@@ -93,9 +95,18 @@ const Generator = () => {
               </button>
             )}
           </div>
-          <pre className="output-content">
-            <code>{markdownOutput || '# Your documentation will appear here...'}</code>
-          </pre>
+          {activeTab === 'code' ? (
+            <pre className="output-content">
+              <code>{markdownOutput || '# Your documentation will appear here...'}</code>
+            </pre>
+          ) : (
+            <div
+              className="output-content markdown-body"
+              dangerouslySetInnerHTML={{
+                __html: marked.parse(markdownOutput || '# Your documentation will appear here...'),
+              }}
+            />
+          )}
         </div>
       </main>
     </div>
