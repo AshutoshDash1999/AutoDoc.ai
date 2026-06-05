@@ -189,6 +189,11 @@
   transition: all 0.2s;
 }
 
+.text-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
 .text-input:focus,
 .text-textarea:focus {
   outline: none;
