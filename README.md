@@ -48,16 +48,16 @@ Whether you're preparing a project for an open-source hackathon, a job portfolio
 
 ### 🌟 Key Features
 
-| Feature | Description |
-|:---|:---|
-| 🔍 **Deep Repo Analysis** | Scans repository structure, configuration files, and code patterns for comprehensive understanding |
-| ⚡ **Instant Generation** | Creates README.md, CONTRIBUTING.md, and API docs in seconds, not hours |
-| 🌐 **API Documentation** | Dedicated support for REST API endpoint documentation generation |
-| 👁️ **Live Preview** | React-based real-time markdown preview with inline manual editing |
-| 📤 **Export Ready** | One-click export producing clean, production-ready documentation files |
-| 🤖 **AI-Powered Accuracy** | Gemini API integration for context-aware, intelligent content generation |
-| 🧩 **Modular Architecture** | Three-layer design enabling easy extension and customization |
-| 🔓 **100% Open Source** | MIT Licensed — free for personal, academic, and commercial use |
+| Feature                     | Description                                                                                        |
+| :-------------------------- | :------------------------------------------------------------------------------------------------- |
+| 🔍 **Deep Repo Analysis**   | Scans repository structure, configuration files, and code patterns for comprehensive understanding |
+| ⚡ **Instant Generation**   | Creates README.md, CONTRIBUTING.md, and API docs in seconds, not hours                             |
+| 🌐 **API Documentation**    | Dedicated support for REST API endpoint documentation generation                                   |
+| 👁️ **Live Preview**         | React-based real-time markdown preview with inline manual editing                                  |
+| 📤 **Export Ready**         | One-click export producing clean, production-ready documentation files                             |
+| 🤖 **AI-Powered Accuracy**  | Gemini API integration for context-aware, intelligent content generation                           |
+| 🧩 **Modular Architecture** | Three-layer design enabling easy extension and customization                                       |
+| 🔓 **100% Open Source**     | MIT Licensed — free for personal, academic, and commercial use                                     |
 
 ---
 
@@ -88,7 +88,7 @@ npm run dev
 The application will be available at:
 
 ```text
-http://localhost:5173
+http://localhost:3000
 ```
 
 ### 4. Build for Production
@@ -147,6 +147,7 @@ graph LR
 
 > [!NOTE]
 > The project architecture is designed to evolve over time, with future plans including AI-powered documentation generation, backend integrations, and expanded automation capabilities.
+
 ---
 
 ## 📁 Project Structure
@@ -183,38 +184,40 @@ AutoDoc.ai/
 ├── LICENSE                         # MIT License
 └── autodoc.png                     # Project logo and branding
 ```
+
 ---
+
 ## 🛠️ Tech Stack
 
 AutoDoc.ai is built with a modular, scalable architecture across three specialized layers.
 
 ### 🌐 Frontend Layer
+
 **React**: A React-based web interface for repository input and real-time previews.
 **Languages**: Built using HTML, CSS, and JavaScript for a responsive experience.
 **Markdown Preview**: Supports real-time preview and manual editing of generated content.
 
 ### ⚙️ Backend Layer
+
 **Node.js & Express**: A robust server that orchestrates all GitHub API interactions.
 **GitHub REST API**: Deeply integrates with GitHub to parse repository files and structures.
 
 ### 🤖 AI Service Layer
+
 **Python Microservice**: A dedicated microservice for intent detection and code summarization.
 **Gemini API**: Leverages advanced AI to generate structured, high-quality documentation text.
-
-
 
 ### 🎨 Technology Badges
 
 <div align="center">
 
-| Category | Badges |
-| :--- | :--- |
+| Category                | Badges                                                                                                                                                                                                                                                   |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Frontend Foundation** | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) |
-| **Core** | ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB) ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) |
-| **Integrations** | ![Gemini](https://img.shields.io/badge/Gemini_API-4285F4?logo=google&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub_API-181717?logo=github&logoColor=white) |
+| **Core**                | ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB) ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) |
+| **Integrations**        | ![Gemini](https://img.shields.io/badge/Gemini_API-4285F4?logo=google&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub_API-181717?logo=github&logoColor=white)                                                                              |
 
 </div>
-
 
 ---
 
@@ -260,29 +263,28 @@ Open Source Growth       ██░░░░░░░░░░░░░░░░�
 
 #### 🎨 User Experience
 
-* [ ] Improve UI responsiveness across devices
-* [ ] Enhance accessibility and usability
-* [ ] Refine navigation and page layouts
+- [ ] Improve UI responsiveness across devices
+- [ ] Enhance accessibility and usability
+- [ ] Refine navigation and page layouts
 
 #### 📄 Documentation Features
 
-* [ ] Improve generated documentation quality
-* [ ] Add additional export options
-* [ ] Expand customization capabilities
+- [ ] Improve generated documentation quality
+- [ ] Add additional export options
+- [ ] Expand customization capabilities
 
 #### 🤖 AI-Powered Enhancements
 
-* [ ] Intelligent documentation assistance
-* [ ] Repository structure analysis
-* [ ] Context-aware content suggestions
+- [ ] Intelligent documentation assistance
+- [ ] Repository structure analysis
+- [ ] Context-aware content suggestions
 
 #### 🌐 Open Source Development
 
-* [ ] Increase test coverage
-* [ ] Improve contributor onboarding
-* [ ] Add automated workflows and CI/CD support
-* [ ] Expand community-driven contributions
-
+- [ ] Increase test coverage
+- [ ] Improve contributor onboarding
+- [ ] Add automated workflows and CI/CD support
+- [ ] Expand community-driven contributions
 
 ---
 
@@ -292,10 +294,9 @@ AutoDoc.ai thrives because of contributors like you. Whether you're fixing a typ
 
 ### 🏆 Open Source Programs
 
-| Program | Event | Timeline | Status |
-|:---|:---|:---|:---|
+| Program                                                                                   | Event                     | Timeline    | Status    |
+| :---------------------------------------------------------------------------------------- | :------------------------ | :---------- | :-------- |
 | ![SSOC](https://img.shields.io/badge/SSOC-Season_of_Open_Source-FF6B35?style=flat-square) | **Social Summer of Code** | Summer 2026 | 🟢 Active |
-
 
 > [!NOTE]
 > AutoDoc.ai is an **SSOC-selected project**. Contributing during the program window earns you official SSOC points, certificates, and recognition on the leaderboard. All accepted PRs during the event will be labeled `ssoc`.
@@ -305,18 +306,21 @@ AutoDoc.ai thrives because of contributors like you. Whether you're fixing a typ
 We're currently in the **Open Source Readiness** phase and actively welcoming contributors of all skill levels.
 
 #### For Beginners 🌱
+
 - Fix typos, grammar, or formatting in documentation
 - Add missing code comments or docstrings
 - Improve error messages for better developer experience
 - Write or improve existing tests
 
 #### For Intermediate Contributors 🌿
+
 - Implement documentation quality scoring
 - Add support for additional AI providers (OpenAI, Cohere, etc.)
 - Improve GitHub API rate-limit handling and caching
 - Build new export formats (PDF, HTML, Notion)
 
 #### For Advanced Contributors 🌳
+
 - Design the GitHub App integration (Phase 3)
 - Architect the plugin system (Phase 4)
 - Implement PR-based documentation suggestion workflows
@@ -371,7 +375,7 @@ This project is licensed under the **[MIT License](./LICENSE)**.
 The MIT License ensures AutoDoc.ai remains **forever free and open** — use it in your academic projects, hackathons, startup products, or enterprise workflows without restriction. We only ask that you keep the license notice intact and consider contributing improvements back to the community.
 
 ```
-Copyright (c) 2025 Abhro
+Copyright (c) 2026 Abhro
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -389,9 +393,9 @@ in the Software without restriction...
 <br/>
 
 **❄️ Abhro**
-*Full-Stack Developer · Data Science Specialization*
+_Full-Stack Developer · Data Science Specialization_
 
-*Building tools that make developers' lives easier, one commit at a time.*
+_Building tools that make developers' lives easier, one commit at a time._
 
 <br/>
 
@@ -408,8 +412,8 @@ in the Software without restriction...
 
 **Made with ❤️ by the AutoDoc.ai community**
 
-*"Because great code deserves great documentation."*
+_"Because great code deserves great documentation."_
 
-<sub>© 2025 AutoDoc.ai · MIT Licensed · Open Source Forever</sub>
+<sub>© 2026 AutoDoc.ai · MIT Licensed · Open Source Forever</sub>
 
 </div>

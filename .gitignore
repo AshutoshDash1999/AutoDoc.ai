@@ -140,3 +140,5 @@ vite.config.ts.timestamp-*
 
 #issue templates
 .github/ISSUE_TEMPLATE/
+# IDE Configurations
+.idea/
