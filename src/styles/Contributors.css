@@ -43,12 +43,12 @@
   line-height: 1.6;
 }
 
-.navbar,
-.navbar * {
+.contributors-page .navbar,
+.contributors-page .navbar * {
   box-sizing: border-box;
 }
 
-.navbar {
+.contributors-page .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,7 +60,7 @@
   top: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
+  z-index: 10000;
   border: 1px solid var(--border-color);
   border-radius: 999px;
   max-width: 700px;
@@ -68,7 +68,7 @@
   box-sizing: border-box;
 }
 
-.nav-logo {
+.contributors-page .nav-logo {
   color: var(--text-primary);
   font-weight: 700;
   font-size: 1.1rem;
@@ -76,7 +76,7 @@
   line-height: 1;
 }
 
-.nav-links {
+.contributors-page .nav-links {
   display: flex;
   gap: 0.25rem;
   list-style: none;
@@ -85,12 +85,12 @@
   align-items: center;
 }
 
-.nav-links li {
+.contributors-page .nav-links li {
   margin: 0;
   padding: 0;
 }
 
-.nav-links a {
+.contributors-page .nav-links a {
   color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
@@ -101,12 +101,12 @@
   line-height: 1;
 }
 
-.nav-links a:hover {
+.contributors-page .nav-links a:hover {
   color: var(--text-primary);
   background: rgba(255, 255, 255, 0.06);
 }
 
-.nav-links a.active {
+.contributors-page .nav-links a.active {
   color: #000;
   background: var(--accent-color);
 }
@@ -137,10 +137,11 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, 280px);
+  justify-content: center;
   gap: 2rem;
   padding: 0 5% 6rem;
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
   animation: fadeInUp 0.6s ease-out 0.15s both;
 }
@@ -150,13 +151,19 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-radius: 20px;
-  padding: 2.5rem 1.75rem 2rem;
-  text-align: center;
+  padding: 2rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   animation: fadeInUp 0.5s ease-out both;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 340px;
+  box-sizing: border-box;
 }
 
 .card:nth-child(1) { animation-delay: 0.1s; }
@@ -178,9 +185,10 @@
   border-radius: 50%;
   border: 2px dashed rgba(34, 197, 94, 0.4);
   padding: 4px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   background: rgba(0, 0, 0, 0.2);
+  object-fit: cover;
 }
 
 .card:hover .avatar {
@@ -190,10 +198,12 @@
 
 .name {
   font-size: 1.25rem;
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.25rem;
   color: var(--text-primary);
   font-weight: 600;
   letter-spacing: -0.01em;
+  text-align: center;
+  word-break: break-all;
 }
 
 .github-btn {
@@ -210,7 +220,7 @@
   font-weight: 500;
   font-size: 0.9rem;
   width: 90%;
-  margin: 0 auto;
+  box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -221,20 +231,85 @@
   box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
 }
 
+/* HAMBURGER BASE STYLES - Hidden on Desktop by default */
+.contributors-page .hamburger {
+  display: none;
+  cursor: pointer;
+  z-index: 10001;
+}
+
+.contributors-page .hamburger div {
+  width: 22px;
+  height: 2px;
+  background-color: var(--text-primary);
+  margin: 4px;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
 @media (max-width: 768px) {
-  .navbar {
+  .contributors-page .navbar {
     padding: 0.6rem 1rem;
     top: 0.5rem;
     width: 95%;
   }
-  .nav-links {
-    gap: 0.15rem;
+
+  .contributors-page .hamburger {
+    display: block;
   }
-  .nav-links a {
-    padding: 0.35rem 0.7rem;
+
+  .contributors-page .nav-links {
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 5%;
+    width: 90%;
+    background: rgba(15, 15, 15, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1rem 0;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(-15px);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .contributors-page .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .contributors-page .nav-links a {
+    display: block;
+    width: 85%;
+    margin: 0 auto;
+    padding: 0.6rem 0;
     font-size: 0.85rem;
   }
-  .header {
+
+  .contributors-page .nav-links.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .contributors-page .hamburger.toggle .line1 {
+    transform: rotate(-45deg) translate(-4px, 5px);
+  }
+  .contributors-page .hamburger.toggle .line2 {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  .contributors-page .hamburger.toggle .line3 {
+    transform: rotate(44deg) translate(-4px, -5px);
+  }
+
+  .contributors-page .header {
     padding-top: 6rem;
   }
 }
@@ -243,6 +318,13 @@
 .skeleton-card {
   pointer-events: none;
   background: rgba(18, 18, 18, 0.35) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 340px;
+  box-sizing: border-box;
 }
 
 .skeleton-avatar {
@@ -250,13 +332,17 @@
   border: 2px dashed rgba(255, 255, 255, 0.1) !important;
   position: relative;
   overflow: hidden;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 1.25rem;
 }
 
 .skeleton-name {
   height: 20px;
   width: 60%;
   background: rgba(255, 255, 255, 0.05);
-  margin: 0 auto 1.5rem;
+  margin: 0 auto 1.25rem;
   border-radius: 4px;
   position: relative;
   overflow: hidden;
