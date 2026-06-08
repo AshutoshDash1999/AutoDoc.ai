@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Home.css";
 import Navbar from "../components/Navbar";
-import logoUrl from "../../autodoc.png";
 
 function Home() {
   useEffect(() => {
@@ -14,15 +13,6 @@ function Home() {
       <Navbar />
 
       <main className="hero">
-        <img
-          className="hero-logo"
-          src={logoUrl}
-          width="80"
-          height="80"
-          alt="AutoDoc.ai logo"
-          decoding="async"
-          fetchPriority="high"
-        />
         <h1 className="hero-title">
           Start your documentation informed. <br />
           <span className="highlight-tag">Not manual-bound.</span>
