@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Home.css";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function Home() {
   useEffect(() => {
@@ -50,19 +51,9 @@ function Home() {
         </div>
       </main>
 
-      <footer>
-        <p>
-          ©AutoDoc.ai | Maintained by{" "}
-          <a
-            href="https://github.com/abhro05"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            abhro05
-          </a>{" "}
-          | MIT License | 2026
-        </p>
-      </footer>
+
+      <Footer />
+
     </div>
   );
 }
