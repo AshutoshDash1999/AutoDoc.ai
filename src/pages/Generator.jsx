@@ -76,12 +76,17 @@ const Generator = () => {
 
   useEffect(() => {
     let isMounted = true;
+    let timeoutId;
 
     if (activeTab !== 'preview') {
       return undefined;
     }
 
     const renderPreview = async () => {
+      // Small debounce to prevent UI freezing during rapid SSE streaming
+      await new Promise(resolve => { timeoutId = setTimeout(resolve, 150); });
+      if (!isMounted) return;
+
       setIsPreviewLoading(true);
       const [{ marked }, DOMPurify] = await Promise.all([
         import("marked"),
@@ -100,6 +105,7 @@ const Generator = () => {
 
     return () => {
       isMounted = false;
+      clearTimeout(timeoutId);
     };
   }, [activeTab, markdownOutput]);
 
@@ -117,6 +123,10 @@ const Generator = () => {
         setJobPhase(data.phase || '');
         setJobMessage(data.message || '');
         setJobProgress(data.progress || { filesProcessed: 0, totalFiles: 0 });
+
+        if (data.markdown) {
+          setMarkdownOutput(data.markdown);
+        }
 
         if (data.status === "completed") {
           setMarkdownOutput(data.markdown || '');

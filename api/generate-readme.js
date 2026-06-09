@@ -318,7 +318,7 @@ const createMessages = ({ repository, files }, customInstructions) => [
   },
 ];
 
-const callOpenAiCompatible = async (provider, messages, env) => {
+const callOpenAiCompatible = async (provider, messages, env, onChunk) => {
   const response = await fetch(`${provider.baseUrl}/chat/completions`, {
     method: "POST",
     headers: {
@@ -330,19 +330,50 @@ const callOpenAiCompatible = async (provider, messages, env) => {
       messages,
       temperature: Number(env.LLM_TEMPERATURE || 0.2),
       max_tokens: asNumber(env.LLM_MAX_TOKENS, 4096),
+      stream: !!onChunk,
     }),
   });
 
-  const data = await response.json();
-
   if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
     throw new Error(data.error?.message || "LLM provider request failed.");
   }
 
-  return data.choices?.[0]?.message?.content;
+  if (!onChunk) {
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content || "";
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder("utf-8");
+  let fullText = "";
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() || "";
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed === "data: [DONE]") continue;
+      if (trimmed.startsWith("data: ")) {
+        try {
+          const parsed = JSON.parse(trimmed.slice(6));
+          const text = parsed.choices?.[0]?.delta?.content || "";
+          if (text) {
+            fullText += text;
+            onChunk(fullText);
+          }
+        } catch (e) {}
+      }
+    }
+  }
+  return fullText;
 };
 
-const callAnthropic = async (provider, messages, env) => {
+const callAnthropic = async (provider, messages, env, onChunk) => {
   const [systemMessage, ...userMessages] = messages;
   const response = await fetch(`${provider.baseUrl}/messages`, {
     method: "POST",
@@ -357,20 +388,51 @@ const callAnthropic = async (provider, messages, env) => {
       messages: userMessages,
       temperature: Number(env.LLM_TEMPERATURE || 0.2),
       max_tokens: asNumber(env.LLM_MAX_TOKENS, 4096),
+      stream: !!onChunk,
     }),
   });
 
-  const data = await response.json();
-
   if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
     throw new Error(data.error?.message || "LLM provider request failed.");
   }
 
-  return data.content?.map((part) => part.text || "").join("");
+  if (!onChunk) {
+    const data = await response.json();
+    return data.content?.map((part) => part.text || "").join("") || "";
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder("utf-8");
+  let fullText = "";
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() || "";
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("event:")) continue;
+      if (trimmed.startsWith("data: ")) {
+        try {
+          const parsed = JSON.parse(trimmed.slice(6));
+          if (parsed.type === "content_block_delta" && parsed.delta?.text) {
+            fullText += parsed.delta.text;
+            onChunk(fullText);
+          }
+        } catch (e) {}
+      }
+    }
+  }
+  return fullText;
 };
 
-const callGemini = async (provider, messages, env) => {
-  const response = await fetch(`${provider.baseUrl}/models/${encodeURIComponent(provider.model)}:generateContent?key=${encodeURIComponent(provider.apiKey)}`, {
+const callGemini = async (provider, messages, env, onChunk) => {
+  const endpoint = onChunk ? "streamGenerateContent?alt=sse" : "generateContent";
+  const response = await fetch(`${provider.baseUrl}/models/${encodeURIComponent(provider.model)}:${endpoint}&key=${encodeURIComponent(provider.apiKey)}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -392,25 +454,55 @@ const callGemini = async (provider, messages, env) => {
     }),
   });
 
-  const data = await response.json();
-
   if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
     throw new Error(data.error?.message || "LLM provider request failed.");
   }
 
-  return data.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("");
+  if (!onChunk) {
+    const data = await response.json();
+    return data.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("") || "";
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder("utf-8");
+  let fullText = "";
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() || "";
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      if (trimmed.startsWith("data: ")) {
+        try {
+          const parsed = JSON.parse(trimmed.slice(6));
+          const text = parsed.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("") || "";
+          if (text) {
+            fullText += text;
+            onChunk(fullText);
+          }
+        } catch (e) {}
+      }
+    }
+  }
+  return fullText;
 };
 
-const generateMarkdown = async (provider, messages, env) => {
+const generateMarkdown = async (provider, messages, env, onChunk) => {
   if (provider.type === "anthropic") {
-    return callAnthropic(provider, messages, env);
+    return callAnthropic(provider, messages, env, onChunk);
   }
 
   if (provider.type === "gemini") {
-    return callGemini(provider, messages, env);
+    return callGemini(provider, messages, env, onChunk);
   }
 
-  return callOpenAiCompatible(provider, messages, env);
+  return callOpenAiCompatible(provider, messages, env, onChunk);
 };
 
 /* ───────────────────────────────────────────────────────────────
@@ -489,7 +581,9 @@ const processJob = async (job, parsedRepo, customInstructions, env) => {
     updateJob(job, { phase: "generating", message: "Generating documentation with AI..." });
 
     const messages = createMessages(repositoryContext, customInstructions);
-    const markdown = await generateMarkdown(provider, messages, env);
+    const markdown = await generateMarkdown(provider, messages, env, (currentMarkdown) => {
+      updateJob(job, { message: "Streaming content...", markdown: currentMarkdown });
+    });
 
     if (!markdown || !markdown.trim()) {
       throw new Error("The LLM provider returned an empty README.");
