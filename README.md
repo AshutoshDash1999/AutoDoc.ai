@@ -366,19 +366,20 @@ All contributors are featured on our Contributors page and in the project README
 
 ## Local Development
 
-To test the project locally, create a `.env` file from `.env.example` and configure an LLM provider.
+This project requires an LLM provider to generate repository documentation. Since API keys cannot be included in a public repository, contributors must configure their own provider before running the project locally.
 
 ### Why is this setup required?
 
-This project relies on an external LLM provider to generate repository documentation. Since API keys cannot be included in the public repository, contributors need to configure their own provider locally.
+The documentation generator depends on external AI models to analyze repositories and generate documentation. Without a valid LLM provider and API key, the application will not be able to process repositories correctly.
 
-Providing clear OpenRouter and environment setup instructions helps contributors get the project running quickly, reduces configuration-related errors, and improves the overall onboarding experience.
+To make local development easier, contributors can use OpenRouter, which provides access to multiple reasoning models through a single API.
 
-### OpenRouter Setup
+### OpenRouter Configuration
 
 1. Create a free account on OpenRouter.
 2. Generate an API key from the dashboard.
-3. Configure the following variables in your `.env` file:
+3. Copy `.env.example` to `.env`.
+4. Configure the following environment variables:
 
 ```env
 LLM_PROVIDER=openai
@@ -387,13 +388,25 @@ OPENAI_BASE_URL=https://openrouter.ai/api/v1
 OPENAI_MODEL=openai/gpt-4o-mini
 ```
 
-You may use any supported reasoning model available through OpenRouter for local testing.
+You may use any supported reasoning model available through OpenRouter for local development and testing.
 
-Common Setup Issues
-- Ensure .env.example is copied/renamed to .env.
-- Verify that your API key is valid.
-- Make sure LLM_PROVIDER is configured correctly.
+### Common Setup Issues
 
+| Issue                           | Solution                                                                                              |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `Set LLM_PROVIDER to openai...` | Verify that `LLM_PROVIDER` is set correctly in the `.env` file.                                       |
+| `Unexpected end of JSON input`  | Check your API key and ensure the provider is configured properly.                                    |
+| Documentation generation fails  | Verify that the API key is valid and the development server has been restarted after updating `.env`. |
+
+### Quick Checklist
+
+Before running the project, ensure that:
+
+* `.env` has been created from `.env.example`
+* A valid OpenRouter API key has been added
+* `LLM_PROVIDER` is configured correctly
+* Dependencies have been installed
+* The development server has been restarted after configuration changes
 ---
 
 ## 📄 License and Maintainer
