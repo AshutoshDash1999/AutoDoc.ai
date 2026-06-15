@@ -1,0 +1,162 @@
+/* ========== FOOTER WITH ICONS ========== */
+
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  margin-top: auto;
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+}
+
+/* Make footer stick to bottom */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+/* Links row */
+.footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+  padding: 0.2rem 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.footer-link:hover {
+  color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.link-icon {
+  font-size: 1.1rem;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+}
+
+.separator {
+  color: var(--accent-color);
+  opacity: 0.5;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+/* Bottom row */
+.footer-bottom p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-bottom strong {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.separator-dot {
+  color: var(--text-secondary);
+  opacity: 0.4;
+  margin: 0 0.2rem;
+}
+
+.copyright-icon,
+.license-icon {
+  font-size: 0.85rem;
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 1rem;
+  }
+
+  .footer-links {
+    gap: 0.75rem;
+  }
+
+  .footer-link {
+    font-size: 0.9rem;
+    gap: 0.3rem;
+  }
+
+  .link-icon {
+    font-size: 1rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.75rem;
+    gap: 0.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 0.875rem;
+  }
+
+  .footer-links {
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .footer-link {
+    font-size: 0.85rem;
+  }
+
+  .link-icon {
+    font-size: 0.9rem;
+  }
+
+  .separator {
+    font-size: 0.8rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.7rem;
+    gap: 0.25rem;
+  }
+
+  .separator-dot {
+    margin: 0 0.1rem;
+  }
+}
+
+/* Optional: Smooth gradient border on top */
+.footer {
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+  opacity: 0.3;
+}

@@ -1,18 +1,28 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "../styles/Home.css";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function Home() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.title = "Home | AutoDoc.ai";
   }, []);
 
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <div className="home-container">
-      <Navbar />
+      <Navbar user={user} onLogout={handleLogout} />
 
-      <header className="hero">
+      <main className="hero">
         <h1 className="hero-title">
           Start your documentation informed. <br />
           <span className="highlight-tag">Not manual-bound.</span>
@@ -35,6 +45,8 @@ function Home() {
             className="btn btn-secondary"
           >
             <svg
+              aria-hidden="true"
+              focusable="false"
               width="20"
               height="20"
               viewBox="0 0 24 24"
@@ -46,21 +58,9 @@ function Home() {
             Documentation
           </a>
         </div>
-      </header>
+      </main>
 
-      <footer>
-        <p>
-          ©AutoDoc.ai | Maintained by{" "}
-          <a
-            href="https://github.com/abhro05"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            abhro05
-          </a>{" "}
-          | MIT License | 2026
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }

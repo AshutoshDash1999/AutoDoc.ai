@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../styles/NotFound.css";
 import Navbar from "../components/Navbar";
 

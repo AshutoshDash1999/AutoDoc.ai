@@ -7,7 +7,7 @@ Welcome! We are thrilled to have you help us eliminate documentation debt. Follo
 1.  **Fork** the repository to your GitHub account.
 2.  **Clone** your fork to your local machine.
 3.  Open the project folder in your preferred code editor (e.g., VS Code).
-4.  Open your terminal and run `npm install` to grab all dependencies for the React frontend and Node backend.
+4.  Open your terminal and run `npm install` to grab all dependencies for the React frontend and Node backend. This also sets up the git hooks automatically via the `prepare` script.
 5.  _(If applicable)_ Ensure your local `.env` file is set up with your Gemini API keys and MongoDB URI.
 6.  Start the development server by running `npm run dev`.
 7.  Open your browser and navigate to `http://localhost:3000`.
@@ -48,13 +48,70 @@ git checkout -b feature/your-feature-name
 ```
 
 **3️⃣ Commit Your Changes**
-Make sure your commits are atomic and descriptive. We follow conventional commits to keep the project history clean.
+Make sure your commits are atomic and descriptive. We enforce [Conventional Commits](https://www.conventionalcommits.org/) via a `commit-msg` git hook — invalid messages are rejected automatically.
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer]
+```
+
+**Allowed types:** `feat` · `fix` · `docs` · `style` · `refactor` · `perf` · `test` · `build` · `ci` · `chore` · `revert`
+
+#### ✅ Good commits
 
 ```bash
-git add .
-git commit -m "feat: add real-time preview to generator"
-# or
-git commit -m "docs: resolve configuration port inconsistencies"
+feat: add real-time preview to generator
+fix(auth): resolve session expiry race condition
+docs: resolve configuration port inconsistencies
+refactor(api): extract validation logic into middleware
+perf(db): cache user preferences to reduce query load
+test: add unit tests for document generation flow
+chore: update .gitignore to exclude .env files
+```
+
+With a body and footer when needed:
+```
+fix(auth): prevent logout on token refresh
+
+The session refresh was racing with the expiry check,
+causing intermittent logouts for active users.
+
+Fixes #87
+```
+
+Breaking change:
+```
+feat(api)!: change response format to camelCase
+
+BREAKING CHANGE: All API responses now use camelCase keys.
+Update your client-side parsers accordingly.
+```
+
+#### ❌ Bad commits
+
+```bash
+# Too vague
+git commit -m "fix: fixed it"
+git commit -m "update: updates"
+git commit -m "misc changes"
+
+# Wrong tense (use imperative mood — "add" not "added")
+git commit -m "feat: added new feature"
+git commit -m "fix: fixes the bug"
+
+# Missing type prefix entirely
+git commit -m "add login page"
+git commit -m "WIP"
+
+# Description too long (keep under 72 chars)
+git commit -m "feat: add a brand new feature that lets users export their data in CSV, JSON, and XML formats with custom delimiters"
+
+# Wrong type casing
+git commit -m "Feat: add dark mode"
+git commit -m "FEAT: add dark mode"
 ```
 
 **4️⃣ Keep Your Fork Synced**

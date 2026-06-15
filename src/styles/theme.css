@@ -1,0 +1,136 @@
+/* Dark Theme (Default) */
+:root,
+[data-theme="dark"],
+.dark-theme {
+  --bg-primary: #080808;
+  --bg-secondary: #121212;
+  --bg-navbar: rgba(10, 10, 10, 0.75);
+  --bg-tertiary: #1a1a1a;
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+  --accent-color: #22c55e;
+  --accent-hover: #16a34a;
+  --accent-light: #86efac;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-hover: rgba(255, 255, 255, 0.15);
+  --btn-bg-secondary: #1c1c1e;
+  --btn-border-secondary: rgba(255, 255, 255, 0.15);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+  --input-bg: #1a1a1a;
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-focus: rgba(34, 197, 94, 0.3);
+  --card-bg: rgba(18, 18, 18, 0.45);
+  --card-bg-hover: rgba(18, 18, 18, 0.65);
+  --card-text-color: var(--text-primary);
+  --card-btn-bg: rgba(255, 255, 255, 0.03);
+  --card-btn-border: rgba(255, 255, 255, 0.08);
+  --card-btn-text: var(--text-primary);
+  --card-btn-hover-bg: rgba(34, 197, 94, 0.1);
+  --output-bg: #0c0c0d;
+}
+
+/* Light Theme */
+[data-theme="light"],
+.light-theme {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f8f8;
+  --bg-navbar: rgba(255, 255, 255, 0.95);
+  --bg-tertiary: #f0f0f0;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-tertiary: #757575;
+  --accent-color: #22c55e;
+  --accent-hover: #16a34a;
+  --accent-light: #dcfce7;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-color-hover: rgba(0, 0, 0, 0.15);
+  --btn-bg-secondary: #f0f0f0;
+  --btn-border-secondary: rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+  --input-bg: #f8f8f8;
+  --input-border: rgba(0, 0, 0, 0.1);
+  --input-focus: rgba(34, 197, 94, 0.1);
+  --output-bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --card-bg-hover: #f3f4f6;
+  --card-text-color: var(--text-primary);
+  --card-btn-bg: rgba(0,0,0,0.04);
+  --card-btn-border: rgba(0,0,0,0.06);
+  --card-btn-text: var(--text-primary);
+  --card-btn-hover-bg: rgba(34,197,94,0.06);
+}
+
+/* Smooth theme transition */
+html,
+body,
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Prevent transition on initial load */
+html.no-transition,
+html.no-transition * {
+  transition: none !important;
+}
+
+/* Scrollbar theming */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 999px;
+  border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-color-hover);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-primary);
+}
+
+/* Ensure theme variables are inherited */
+html {
+  color-scheme: light dark;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body,
+  * {
+    transition: none !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  html,
+  [data-theme] {
+    --bg-primary: #ffffff;
+    --text-primary: #000000;
+    color-scheme: light;
+  }
+}

@@ -1,0 +1,236 @@
+html {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  min-width: 320px;
+}
+
+.route-loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  font: 600 1rem/1.4 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--bg-navbar);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-logo:hover {
+  color: var(--accent-color);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-links a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+}
+
+.hamburger {
+  display: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0.35rem;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger div {
+  width: 22px;
+  height: 2px;
+  background-color: var(--text-primary);
+  margin: 4px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger.toggle .line1 {
+  transform: rotate(-45deg) translate(-4px, 5px);
+}
+
+.hamburger.toggle .line2 {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.hamburger.toggle .line3 {
+  transform: rotate(44deg) translate(-4px, -5px);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 5%;
+    width: 90%;
+    background: var(--bg-secondary);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1rem 0;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transform: translateY(-15px);
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .navbar .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar .nav-links a {
+    display: block;
+    width: 85%;
+    margin: 0 auto;
+    padding: 0.6rem 0;
+  }
+
+  .navbar .nav-links.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* Add these styles to existing Navbar.css */
+
+/* User Info & Logout Button - Desktop */
+
+.logout-btn {
+  background: none;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #dc2626;
+  color: #dc2626;
+  transform: translateY(-1px);
+}
+
+.logout-btn:active {
+  transform: translateY(0);
+}
+
+/* Mobile Logout Button - Danger/Red Color */
+.logout-mobile {
+  margin-top: 0.5rem;
+}
+
+.logout-btn-mobile {
+  background: none;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  width: 85%;
+  margin: 0 auto;
+  transition: all 0.2s ease;
+}
+
+.logout-btn-mobile:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+/* Adjust nav-actions for better spacing */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+ 
+ 
+  .logout-mobile {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  .logout-mobile {
+    display: none;
+  }
+}
