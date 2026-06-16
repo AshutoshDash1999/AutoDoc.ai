@@ -80,6 +80,13 @@ const Login = () => {
             </div>
           </div>
 
+          {/* ✅ ADD THIS - Forgot Password Link */}
+          <div className="forgot-password-container">
+            <Link to="/forgot-password" className="forgot-password-link">
+              Forgot Password?
+            </Link>
+          </div>
+
           <button
             type="submit"
             disabled={loading}

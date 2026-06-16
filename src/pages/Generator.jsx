@@ -85,6 +85,31 @@ const Generator = () => {
     };
   }, []);
 
+  // Save to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem("autodoc_repo_url", repoUrl);
+    } catch (e) {
+      console.warn("Failed to save repoUrl to localStorage:", e);
+    }
+  }, [repoUrl]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("autodoc_custom_instructions", customInstructions);
+    } catch (e) {
+      console.warn("Failed to save customInstructions to localStorage:", e);
+    }
+  }, [customInstructions]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("autodoc_markdown_output", markdownOutput);
+    } catch (e) {
+      console.warn("Failed to save markdownOutput to localStorage:", e);
+    }
+  }, [markdownOutput]);
+
   const handleUrlChange = (e) => {
     setRepoUrl(e.target.value);
     if (error) {
@@ -92,6 +117,7 @@ const Generator = () => {
     }
   };
 
+  // Preview renderer
   useEffect(() => {
     let isMounted = true;
     let timeoutId;
@@ -101,7 +127,6 @@ const Generator = () => {
     }
 
     const renderPreview = async () => {
-      // Small debounce to prevent UI freezing during rapid SSE streaming
       await new Promise(resolve => { timeoutId = setTimeout(resolve, 150); });
       if (!isMounted) return;
 
@@ -127,6 +152,7 @@ const Generator = () => {
     };
   }, [activeTab, markdownOutput]);
 
+  // Connect to job status via SSE
   const connectToJobStatus = useCallback((jobId) => {
     if (eventSourceRef.current) {
       eventSourceRef.current.close();
@@ -163,32 +189,8 @@ const Generator = () => {
       } catch (_) {
         /* ignore parse errors */
       }
-  useEffect(() => {
-    try {
-      localStorage.setItem("autodoc_repo_url", repoUrl);
-    } catch (e) {
-      console.warn("Failed to save repoUrl to localStorage:", e);
-    }
-  }, [repoUrl]);
+    };
 
-  useEffect(() => {
-    try {
-      localStorage.setItem("autodoc_custom_instructions", customInstructions);
-    } catch (e) {
-      console.warn("Failed to save customInstructions to localStorage:", e);
-    }
-  }, [customInstructions]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("autodoc_markdown_output", markdownOutput);
-    } catch (e) {
-      console.warn("Failed to save markdownOutput to localStorage:", e);
-    }
-  }, [markdownOutput]);
-
-  const handleGenerate = () => {
-=======
     es.onerror = () => {
       setError("Lost connection to job status stream. Please try again.");
       setIsGenerating(false);
@@ -196,6 +198,7 @@ const Generator = () => {
     };
   }, []);
 
+  // Main generate function - ONLY ONE!
   const handleGenerate = async () => {
     const trimmedUrl = repoUrl.trim();
     if (!trimmedUrl) {
@@ -212,11 +215,13 @@ const Generator = () => {
       setTimeout(() => setShouldShake(false), 400);
       return;
     }
+
     setIsGenerating(true);
     setJobPhase('queued');
     setJobMessage('Submitting job...');
     setJobProgress({ filesProcessed: 0, totalFiles: 0 });
     setMarkdownOutput('');
+    setError('');
 
     try {
       const response = await fetch('/api/generate-readme', {
@@ -281,6 +286,7 @@ const Generator = () => {
     setJobPhase('');
     setJobMessage('');
     setJobProgress({ filesProcessed: 0, totalFiles: 0 });
+    setError('');
     if (eventSourceRef.current) {
       eventSourceRef.current.close();
     }
