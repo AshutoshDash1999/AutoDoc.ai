@@ -163,6 +163,15 @@ const Generator = () => {
       } catch (_) {
         /* ignore parse errors */
       }
+    };
+
+    es.onerror = () => {
+      setError("Lost connection to job status stream. Please try again.");
+      setIsGenerating(false);
+      es.close();
+    };
+  }, []);
+
   useEffect(() => {
     try {
       localStorage.setItem("autodoc_repo_url", repoUrl);
@@ -186,15 +195,6 @@ const Generator = () => {
       console.warn("Failed to save markdownOutput to localStorage:", e);
     }
   }, [markdownOutput]);
-
-  const handleGenerate = () => {
-=======
-    es.onerror = () => {
-      setError("Lost connection to job status stream. Please try again.");
-      setIsGenerating(false);
-      es.close();
-    };
-  }, []);
 
   const handleGenerate = async () => {
     const trimmedUrl = repoUrl.trim();
