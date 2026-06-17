@@ -29,6 +29,15 @@ const userSchema = new mongoose.Schema({
     enum: ['email', 'google', 'github'],
     default: 'email',
   },
+  //  ADD THESE TWO FIELDS FOR FORGOT PASSWORD
+  resetToken: {
+    type: String,
+    default: null
+  },
+  resetTokenExpiry: {
+    type: Date,
+    default: null
+  },
   createdAt: {
     type: Date,
     default: Date.now,
