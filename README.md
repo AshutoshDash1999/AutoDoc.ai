@@ -55,7 +55,7 @@ Whether you're preparing a project for an open-source hackathon, a job portfolio
 | 🌐 **API Documentation**    | Dedicated support for REST API endpoint documentation generation                                   |
 | 👁️ **Live Preview**         | React-based real-time markdown preview with inline manual editing                                  |
 | 📤 **Export Ready**         | One-click export producing clean, production-ready documentation files                             |
-| 🤖 **AI-Powered Accuracy**  | Gemini API integration for context-aware, intelligent content generation                           |
+| 🤖 **AI-Powered Accuracy**  | Multi-provider AI support including OpenAI, Gemini, Anthropic, NVIDIA, and compatible providers                           |
 | 🧩 **Modular Architecture** | Three-layer design enabling easy extension and customization                                       |
 | 🔓 **100% Open Source**     | MIT Licensed — free for personal, academic, and commercial use                                     |
 
@@ -110,16 +110,36 @@ npm run preview
 
 ## 🔄 System Architecture
 
-AutoDoc.ai currently follows a lightweight client-side architecture built with React and Vite. The application is organized into reusable pages and components, providing a fast and responsive user experience while maintaining a clean and scalable codebase.
+AutoDoc.ai follows a full-stack architecture consisting of a React + Vite frontend, a Node.js + Express backend, Supabase-based authentication, and a configurable multi-provider AI integration layer.
+
+The frontend provides the user interface and documentation workflow, while the backend handles authentication, repository analysis, provider orchestration, and documentation generation.
 
 ```text
-                                        ┌─────────────────────────────────────────────┐
-                                        │                User Browser                 │
-                                        │                                             │
-                                        │        React + Vite Frontend App            │
-                                        │                                             │
-                                        │  Home Page → Generator → Contributors       │
-                                        └─────────────────────────────────────────────┘
+┌─────────────────────┐
+│    User Browser     │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ React + Vite Client │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Node.js + Express   │
+│      Backend        │
+└──────────┬──────────┘
+           │
+ ┌─────────┼──────────────┐
+ ▼         ▼              ▼
+Supabase  GitHub API   LLM Providers
+
+                     ┌───────────┐
+                     │ OpenAI    │
+                     │ Gemini    │
+                     │ Anthropic │
+                     │ NVIDIA    │
+                     └───────────┘
 ```
 
 ### Application Flow
@@ -138,15 +158,20 @@ graph LR
 
 ### Architecture Overview
 
-| Layer            | Technology       | Responsibility                                     |
-| :--------------- | :--------------- | :------------------------------------------------- |
-| **Frontend**     | React 18 + Vite  | User interface, routing, and application rendering |
-| **Pages**        | React Components | Home, Generator, and Contributors views            |
-| **Styling**      | CSS3             | Responsive layout and visual design                |
-| **Build System** | Vite             | Development server and production builds           |
+| Layer             | Technology                                          | Responsibility                                              |
+| ----------------- | --------------------------------------------------- | ----------------------------------------------------------- |
+| Frontend          | React 18 + Vite                                     | User interface, routing, and rendering                      |
+| Backend           | Node.js + Express                                   | API endpoints, authentication, and documentation generation |
+| Authentication    | Supabase                                            | Email/password login, OAuth, session management             |
+| AI Provider Layer | OpenAI, Gemini, Anthropic, NVIDIA, Custom Providers | Documentation generation and LLM orchestration              |
+| External Services | GitHub API                                          | Repository analysis and contributor information             |
+| State Management  | React Context API                                   | Authentication and theme state                              |
+| Styling           | CSS3 + Theme System                                 | Responsive UI and dark/light themes                         |
+| Build System      | Vite                                                | Development server and production builds                    |
+
 
 > [!NOTE]
-> The project architecture is designed to evolve over time, with future plans including AI-powered documentation generation, backend integrations, and expanded automation capabilities.
+> The architecture is designed to support multiple AI providers, scalable backend services, and future feature expansion while maintaining clear separation between frontend, backend, authentication, and provider integrations.
 
 ---
 
@@ -156,33 +181,98 @@ graph LR
 AutoDoc.ai/
 │
 ├── .github/
-│   └── ISSUE_TEMPLATE/
-│       ├── ❄️-feature-request.md
-│       ├── 🐛-bug-report.md
-│       ├── 💬-general---blank-issue.md
-│       └── 📝-documentation-update.md
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── ❄️-feature-request.md
+│   │   ├── 🐛-bug-report.md
+│   │   ├── 💬-general---blank-issue.md
+│   │   └── 📝-documentation-update.md
+│   │
+│   ├── workflows/
+│   │   └── issue-greeter.yml
+│   │
+│   └── pull_request_template.md
 │
-├── src/
-│   ├── main.jsx                    # React application entry point
+├── .husky/                             # Git hooks
+│
+├── api/                                # Express backend
+│   ├── models/
+│   │   └── User.js
+│   │
+│   ├── routes/
+│   │   └── auth.js
+│   │
+│   ├── utils/
+│   │   ├── authValidation.js
+│   │   └── supabaseAdmin.js
+│   │
+│   ├── auth.test.js
+│   ├── generate-readme.js              # Documentation generation logic
+│   └── generate-readme.test.js
+│
+├── src/                                # React + Vite frontend
+│   │
+│   ├── components/
+│   │   ├── Footer.jsx
+│   │   ├── Footer.css
+│   │   ├── Navbar.jsx
+│   │   ├── Navbar.css
+│   │   ├── ProtectedRoute.jsx
+│   │   ├── ProtectedRoute.css
+│   │   ├── Spinner.jsx
+│   │   ├── Spinner.css
+│   │   ├── ThemeToggle.jsx
+│   │   └── ThemeToggle.css
+│   │
+│   ├── context/
+│   │   ├── AuthContext.jsx
+│   │   └── ThemeContext.jsx
 │   │
 │   ├── pages/
-│   │   ├── App.jsx                 # Application routing and layout
-│   │   ├── Home.jsx                # Landing page
-│   │   ├── Generator.jsx           # Documentation generator interface
-│   │   └── Contributors.jsx        # Contributors showcase page
+│   │   ├── Home.jsx
+│   │   ├── Generator.jsx
+│   │   ├── Contributors.jsx
+│   │   ├── Login.jsx
+│   │   ├── Signup.jsx
+│   │   ├── ForgotPassword.jsx
+│   │   ├── ResetPassword.jsx
+│   │   ├── AuthSuccess.jsx
+│   │   └── NotFound.jsx
 │   │
-│   └── styles/
-│       ├── home.css                # Home page styling
-│       ├── Generator.css           # Generator page styling
-│       └── Contributors.css        # Contributors page styling
+│   ├── styles/
+│   │   ├── Home.css
+│   │   ├── Generator.css
+│   │   ├── Contributors.css
+│   │   ├── Login.css
+│   │   ├── Signup.css
+│   │   ├── NotFound.css
+│   │   └── theme.css
+│   │
+│   ├── supabase/
+│   │   └── client.js
+│   │
+│   ├── utils/
+│   │   ├── authErrors.js
+│   │   ├── authErrors.test.js
+│   │   ├── performanceOptimization.js
+│   │   └── routePreloader.js
+│   │
+│   ├── App.jsx
+│   └── main.jsx
 │
-├── index.html                      # Main HTML template
-├── package.json                    # Project metadata and dependencies
-├── package-lock.json               # Dependency lock file
-├── vite.config.js                  # Vite configuration
-├── README.md                       # Project documentation
-├── LICENSE                         # MIT License
-└── autodoc.png                     # Project logo and branding
+├── .env.example                        # Environment template
+├── .gitignore
+├── autodoc.png
+├── CODE_OF_CONDUCT.md
+├── commitlint.config.js
+├── CONTRIBUTING.md
+├── index.html
+├── LICENSE
+├── package.json
+├── package-lock.json
+├── README.md
+├── THEME_SYSTEM.md
+├── vite.config.js
+└── server.js                           # Express server entry point
 ```
 
 ---
@@ -202,10 +292,19 @@ AutoDoc.ai is built with a modular, scalable architecture across three specializ
 **Node.js & Express**: A robust server that orchestrates all GitHub API interactions.
 **GitHub REST API**: Deeply integrates with GitHub to parse repository files and structures.
 
-### 🤖 AI Service Layer
+### 🤖 AI Provider Layer
 
-**Python Microservice**: A dedicated microservice for intent detection and code summarization.
-**Gemini API**: Leverages advanced AI to generate structured, high-quality documentation text.
+AutoDoc.ai supports multiple LLM providers through a configurable provider abstraction layer.
+
+Supported providers include:
+
+- OpenAI
+- Gemini
+- Anthropic
+- NVIDIA
+- Custom OpenAI-compatible providers
+
+The active provider is selected through environment configuration using the `LLM_PROVIDER` setting.
 
 ### 🎨 Technology Badges
 
@@ -214,8 +313,8 @@ AutoDoc.ai is built with a modular, scalable architecture across three specializ
 | Category                | Badges                                                                                                                                                                                                                                                   |
 | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Frontend Foundation** | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) |
-| **Core**                | ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB) ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) |
-| **Integrations**        | ![Gemini](https://img.shields.io/badge/Gemini_API-4285F4?logo=google&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub_API-181717?logo=github&logoColor=white)                                                                              |
+| **Core**                | ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB) ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white) ![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white) |
+| **Integrations**        | ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=white) ![OpenAI](https://img.shields.io/badge/OpenAI-412991?logo=openai&logoColor=white) ![Gemini](https://img.shields.io/badge/Gemini_API-4285F4?logo=google&logoColor=white) ![Anthropic](https://img.shields.io/badge/Anthropic-191919?logo=anthropic&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub_API-181717?logo=github&logoColor=white) |                                                                             |
 
 </div>
 

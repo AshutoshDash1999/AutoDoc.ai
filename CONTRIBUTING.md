@@ -8,7 +8,7 @@ Welcome! We are thrilled to have you help us eliminate documentation debt. Follo
 2.  **Clone** your fork to your local machine.
 3.  Open the project folder in your preferred code editor (e.g., VS Code).
 4.  Open your terminal and run `npm install` to grab all dependencies for the React frontend and Node backend. This also sets up the git hooks automatically via the `prepare` script.
-5.  _(If applicable)_ Ensure your local `.env` file is set up with your Gemini API keys and MongoDB URI.
+5.  _(If applicable)_ Ensure your local `.env` file is configured with a supported LLM provider (OpenAI, Gemini, Anthropic, NVIDIA, or compatible providers) and the required API credentials.
 6.  Start the development server by running `npm run dev`.
 7.  Open your browser and navigate to `http://localhost:3000`.
 8.  **Claim an Issue:** Find an existing issue or create a new one. Wait for a maintainer to officially assign it to you, then create a branch (e.g., `feature/generator-ui-update`), and start coding!
@@ -19,14 +19,14 @@ Welcome! We are thrilled to have you help us eliminate documentation debt. Follo
 
 ### 🧱 Project Architecture
 
-AutoDoc.ai is a full-stack application utilizing the MERN stack alongside Python and Gemini AI.
+AutoDoc.ai is a full-stack application built with React + Vite, Node.js + Express, Supabase authentication, and a configurable multi-provider AI integration layer.
 
 - **Frontend (`/src`):** Built with React and Vite. Contains all user-facing components, routing via React Router, and CSS/glassmorphism styling.
-- **Backend / API:** Powered by Node.js and Express. Handles API routes, communicates with MongoDB, and integrates Python scripts to communicate securely with the Gemini AI API for documentation generation.
+- **Backend / API:** Powered by Node.js and Express. Handles API routes, authentication, repository analysis, and documentation generation through a configurable multi-provider AI system.
 
 ### 🖥️ Local Development Rules
 
-Because AutoDoc.ai relies on backend processes to analyze repositories and ping the Gemini API, **certain features require both the frontend and backend servers to be running.**
+Because AutoDoc.ai relies on backend services to analyze repositories and communicate with configured AI providers, **certain features require both the frontend and backend servers to be running.**
 
 ### 🚦 WORKFLOW
 
