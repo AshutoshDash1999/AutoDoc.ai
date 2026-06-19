@@ -126,7 +126,7 @@ body {
     top: 100%;
     left: 5%;
     width: 90%;
-    background: var(--bg-secondary);
+    background: var(--card-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 1rem 0;
@@ -152,6 +152,11 @@ body {
     width: 85%;
     margin: 0 auto;
     padding: 0.6rem 0;
+  }
+
+  .navbar .nav-links a.active {
+    background: var(--accent-light);
+    border-radius: 8px;
   }
 
   .navbar .nav-links.open {
